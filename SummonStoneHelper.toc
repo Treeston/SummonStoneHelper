@@ -1,0 +1,8 @@
+## Interface: 20503
+## Title: SummonStoneHelper
+## SavedVariables: SummonStoneHelper_Saved
+
+Localization.lua
+SummonStoneData.lua
+SummonTracker.lua
+Main.lua
