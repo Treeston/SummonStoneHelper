@@ -6,5 +6,6 @@
     <Include file="externals\AceDB-3.0\AceDB-3.0.xml"/>
     <Include file="externals\AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
     <Include file="externals\LibSharedMedia-3.0\lib.xml"/>
+    <Include file="externals\AceGUI-3.0-SharedMediaWidgets\widget.xml"/>
 @end-non-debug@-->
 </Ui>

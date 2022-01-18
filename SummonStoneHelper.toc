@@ -2,7 +2,7 @@
 ## Title: SummonStoneHelper
 ## SavedVariables: SummonStoneHelper__DB
 ## Version: @project-version@
-## OptionalDeps: Ace3, LibSharedMedia-3.0
+## OptionalDeps: Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets
 
 #@no-lib-strip@
 externals.xml
@@ -11,4 +11,5 @@ externals.xml
 Localization.lua
 SummonStoneData.lua
 SummonTracker.lua
+Options.lua
 Main.lua

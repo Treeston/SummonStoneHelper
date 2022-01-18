@@ -9,7 +9,7 @@ local SummonTracker, SummonStoneData, LocalizedString = addon.SummonTracker, add
 
 if not LocalizedString then return end
 
-print(("|cffffd300SummonStoneHelper|r: Loaded for locale |cffffd300%s|r."):format(GetLocale()))
+print(LocalizedString["|cffffd300SummonStoneHelper|r: Loaded. |cffffd300/ssh|r for settings."])
 
 -- { name, stoneMapId, maps, zones }
 local activeMeetingStone
@@ -56,21 +56,72 @@ bgTexture:SetColorTexture(0,0,0)
 bgTexture:SetAlpha(0.3)
 local fontFace = DEFAULT_CHAT_FRAME:GetFont()
 local targetLabelText = targetFrameTextContainer:CreateFontString(nil, "ARTWORK")
-targetLabelText:SetFont(fontFace, 8, "OUTLINE")
-targetLabelText:SetPoint("TOPLEFT", 5, -5)
-targetLabelText:SetText(LocalizedString["Use %s to target:"]:format(("|cffffd300%s|r"):format(GetBindingText("SHIFT-BUTTON1"))))
+targetLabelText:SetPoint("TOP", 0, -5)
+targetLabelText:SetPoint("LEFT", 5, 0)
 local targetPlayerNameText = targetFrameTextContainer:CreateFontString(nil, "ARTWORK")
-targetPlayerNameText:SetFont(fontFace, 14, "OUTLINE")
-targetPlayerNameText:SetPoint("TOPLEFT", 7, -15)
+targetPlayerNameText:SetPoint("TOP", targetLabelText, "BOTTOM", 0, -2)
+targetPlayerNameText:SetPoint("LEFT", 7, 0)
 local targetPlayerSubzoneText = targetFrameTextContainer:CreateFontString(nil, "ARTWORK")
-targetPlayerSubzoneText:SetFont(fontFace, 10, "OUTLINE")
 targetPlayerSubzoneText:SetTextColor(1,.83,0)
-targetPlayerSubzoneText:SetPoint("TOPLEFT", 9, -30)
+targetPlayerSubzoneText:SetPoint("TOP", targetPlayerNameText, "BOTTOM", 0, 0)
+targetPlayerSubzoneText:SetPoint("LEFT", 9, 0)
 local targetScrollLabelText = targetFrameTextContainer:CreateFontString(nil, "ARTWORK")
-targetScrollLabelText:SetFont(fontFace, 8, "OUTLINE")
-targetScrollLabelText:SetPoint("TOPLEFT", 5, -42)
-targetScrollLabelText:SetText(LocalizedString["Use %s to switch."]:format(("|cffffd300%s|r"):format(GetBindingText("SHIFT-MOUSEWHEELDOWN"))))
+targetScrollLabelText:SetPoint("TOP", targetPlayerSubzoneText, "BOTTOM", 0, -5)
+targetScrollLabelText:SetPoint("LEFT", 5, 0)
 
+local function UpdateTargetFrameDimensions()
+    local hSLT = targetScrollLabelText:GetHeight()
+    local hTLT = targetLabelText:GetHeight()
+    local hTPNT = targetPlayerNameText:GetHeight()
+    local hTPST = targetPlayerSubzoneText:GetHeight()
+    if hSLT > 2 then hSLT = hSLT + 5 else hSLT = 0 end
+    targetFrameTextContainer:SetHeight(12
+            + hSLT
+            + hTLT
+            + hTPNT
+            + hTPST
+    )
+    targetFrameTextContainer:SetWidth(max(
+        10+targetScrollLabelText:GetWidth(),
+        10+targetLabelText:GetWidth(),
+        12+targetPlayerNameText:GetWidth(),
+        14+targetPlayerSubzoneText:GetWidth()
+    ))
+end
+
+function addon:UpdateBindings()
+    if activeMeetingStone then
+        ClearOverrideBindings(targetFrame)
+        SetOverrideBindingClick(targetFrame, true, addon.opt.keybindTargetSelected, "SummonStoneHelperTargetButton")
+        if addon.opt.keybindPreviousTarget then
+            SetOverrideBindingClick(targetFrame, true, addon.opt.keybindPreviousTarget, "SummonStoneHelperScrollUpButton")
+        end
+        if addon.opt.keybindNextTarget then
+            SetOverrideBindingClick(targetFrame, true, addon.opt.keybindNextTarget, "SummonStoneHelperScrollDownButton")
+        end
+    end
+    targetLabelText:SetText(LocalizedString["Use %s to target:"]:format(("|cffffd300%s|r"):format(GetBindingText(addon.opt.keybindTargetSelected))))
+    if addon.opt.keybindNextTarget then
+        targetScrollLabelText:SetText(LocalizedString["Use %s to switch."]:format(("|cffffd300%s|r"):format(GetBindingText(addon.opt.keybindNextTarget))))
+    else
+        targetScrollLabelText:SetText("")
+    end
+    UpdateTargetFrameDimensions()
+end
+
+local LSM = LibStub("LibSharedMedia-3.0")
+local function fontopt(t)
+    local fontFile = t.enableFont and LSM:Fetch("font", t.font) or DEFAULT_CHAT_FRAME:GetFont()
+    return fontFile, t.size, t.outline
+end
+function addon:UpdateFonts()
+    local labelFont, labelSize, labelOutline = fontopt(addon.opt.fonts.label)
+    targetLabelText:SetFont(labelFont, labelSize, labelOutline)
+    targetScrollLabelText:SetFont(labelFont, labelSize, labelOutline)
+    targetPlayerNameText:SetFont(fontopt(addon.opt.fonts.name))
+    targetPlayerSubzoneText:SetFont(fontopt(addon.opt.fonts.zone))
+    UpdateTargetFrameDimensions()
+end
 
 local UpdateFnDefault = function(target, current, candidate)
     if target <= current then
@@ -121,6 +172,7 @@ local function TargetFrameUpdate(isImprovement)
         targetPlayerNameText:SetTextColor(selectedClassColors:GetRGB())
         targetPlayerNameText:SetText(selectedName)
         targetPlayerSubzoneText:SetText(selectedSubzone)
+        UpdateTargetFrameDimensions()
         dummyFrameTarget:SetAttribute("macrotext", ("/target %s"):format(selectedName))
     else
         targetFrameTextContainer:Hide()
@@ -153,7 +205,7 @@ local function SetActiveMeetingStone(which)
     if which and not stoneData then
         if not unknownStonesNotified[which] then
             unknownStonesNotified[which] = true
-            print(("|cffffd300SummonStoneHelper:|r Unknown Meeting Stone |cffffd300%s|r."):format(which))
+            print(LocalizedString["|cffffd300SummonStoneHelper:|r Unknown Meeting Stone |cffffd300%s|r."]:format(which))
         end
     end
     
@@ -162,9 +214,13 @@ local function SetActiveMeetingStone(which)
     activeMeetingStone = stoneData
     
     if stoneData then
-        SetOverrideBindingClick(targetFrame, true, "SHIFT-BUTTON1", "SummonStoneHelperTargetButton")
-        SetOverrideBindingClick(targetFrame, true, "SHIFT-MOUSEWHEELUP", "SummonStoneHelperScrollUpButton")
-        SetOverrideBindingClick(targetFrame, true, "SHIFT-MOUSEWHEELDOWN", "SummonStoneHelperScrollDownButton")
+        SetOverrideBindingClick(targetFrame, true, addon.opt.keybindTargetSelected, "SummonStoneHelperTargetButton")
+        if addon.opt.keybindPreviousTarget then
+            SetOverrideBindingClick(targetFrame, true, addon.opt.keybindPreviousTarget, "SummonStoneHelperScrollUpButton")
+        end
+        if addon.opt.keybindNextTarget then
+            SetOverrideBindingClick(targetFrame, true, addon.opt.keybindNextTarget, "SummonStoneHelperScrollDownButton")
+        end
         targetFrameUpdateDelay = 0.2
         TargetFrameUpdate()
         targetFrame:Show()
