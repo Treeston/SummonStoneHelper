@@ -40,10 +40,10 @@ RegisterStone(3545, -- Hellfire Citadel (can be either 5mans or Magtheridon, the
     { 3545, 3955 } -- Hellfire Citadel, Hellfire Basin
 )
 
-RegisterStone(3519, -- Auchindoun
+RegisterStone(3688, -- Auchindoun
     530, -- Outland
     { 557, 558, 556, 555 }, -- MT, AC, SEH, SL
-    { 3519, 3893 } -- Auchindoun, Ring of Observance
+    { 3688, 3893 } -- Auchindoun, Ring of Observance
 )
 
 RegisterStone(3959, -- Black Temple
@@ -82,7 +82,7 @@ RegisterStone(719, -- Blackfathom Deeps
     { 414, 2797 } -- The Zoram Strand, Blackfathom Deeps
 )
 
-RegisterStone(718,
+RegisterStone(718, -- Wailing Caverns
     1, -- Kalimdor
     { 43 }, -- Wailing Caverns
     { 387, 718 } -- Lushwater Oasis, Wailing Caverns
@@ -129,4 +129,93 @@ RegisterStone(2300, -- Caverns of Time
     { 560, 269, 534 }, -- OHF, BM, MH
     { 2300 } -- Caverns of Time
 )
--- @todo add data for other meeting stones
+
+RegisterStone(3428, -- Ahn'Qiraj
+    1, -- Kalimdor
+    { 509, 531 }, -- AQ20, AQ40
+    { 2737, 2741, 3478 } -- The Scarab Wall, The Scarab Dais, Gates of Ahn'Qiraj
+)
+
+RegisterStone(796, -- Scarlet Monastery
+    0, -- Eastern Kingdoms
+    { 189 }, -- Scarlet Monastery
+    { 160, 796 } -- Whispering Gardens, Scarlet Monastery
+)
+
+RegisterStone(2057, -- Scholomance
+    0, -- Eastern Kingdoms
+    { 289 }, -- Scholomance
+    { 2298, 2057 } -- Caer Darrow, Scholomance
+)
+
+RegisterStone(2017, -- Stratholme
+    0, -- Eastern Kingdoms
+    { 329 }, -- Stratholme
+    { 2625, 2277, 2627, 2279 } -- Eastwall Gate, Plaguewood, Terrordale, Stratholme
+)
+
+RegisterStone(3805, -- Zul'Aman
+    530, -- "Outland" (Ghostlands)
+    { --[[ @todo ZA map ID --]] }, -- Zul'Aman
+    { 3508, 3805 } -- Amani Pass, Zul'Aman
+)
+
+RegisterStone(209, -- Shadowfang Keep
+    0, -- Eastern Kingdoms
+    { 33 }, -- Shadowfang Keep
+    { 130 } -- Shadowfang Keep
+)
+
+RegisterStone(721, -- Gnomeregan
+    0, -- Eastern Kingdoms
+    { 90 }, -- Gnomeregan
+    { 133 } -- Gnomeregan
+)
+
+RegisterStone(1337, -- Uldaman
+    0, -- Eastern Kingdoms
+    { 70 }, -- Uldaman
+    { 1517, 1897 } -- Uldaman, The Maker's Terrace
+)
+
+RegisterStone(1584, -- Blackrock Depths
+    0, -- Eastern Kingdoms
+    { 230, 229, 409, 469 }, -- Blackrock Depths, Blackrock Spire, Molten Core, Blackwing Lair
+    { 25, 254, 1445, } -- Blackrock Mountain (x3)
+)
+
+RegisterStone(1583, -- Blackrock Spire
+    0, -- Eastern Kingdoms
+    { 230, 229, 409, 469 }, -- Blackrock Depths, Blackrock Spire, Molten Core, Blackwing Lair
+    { 25, 254, 1445, } -- Blackrock Mountain (x3)
+)
+
+RegisterStone(717, -- The Stockade
+    0, -- Eastern Kingdoms
+    { 34 }, -- The Stockade
+    { 1519 } -- Stormwind City
+)
+
+RegisterStone(1581, -- The Deadmines
+    0, -- Eastern Kingdoms
+    { 36 }, -- The Deadmines
+    { 1581, 20 } -- The Deadmines, Moonbrook
+)
+
+RegisterStone(3457, -- Karazhan
+    0, -- Eastern Kingdoms
+    { 532 }, -- Karazhan
+    { 2562, 2837 } -- Karazhan, The Master's Cellar
+)
+
+RegisterStone(1477, -- Sunken Temple
+    0, -- Eastern Kingdoms
+    { 109 }, -- Sunken Temple
+    { 74, 1477 } -- Poor of Tears, The Temple of Atal'Hakkar
+)
+
+RegisterStone(1977, -- Zul'Gurub
+    0, -- Eastern Kingdoms
+    { 309 }, -- Zul'Gurub
+    { 19 } -- Zul'Gurub
+)

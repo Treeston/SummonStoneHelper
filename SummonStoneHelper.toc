@@ -1,6 +1,12 @@
 ## Interface: 20503
 ## Title: SummonStoneHelper
-## SavedVariables: SummonStoneHelper_Saved
+## SavedVariables: SummonStoneHelper__DB
+## Version: @project-version@
+## OptionalDeps: Ace3, LibSharedMedia-3.0
+
+#@no-lib-strip@
+externals.xml
+#@end-no-lib-strip@
 
 Localization.lua
 SummonStoneData.lua
