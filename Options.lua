@@ -16,6 +16,7 @@ local defaults = {
         keybindTargetSelected = "SHIFT-BUTTON1",
         keybindPreviousTarget = "SHIFT-MOUSEWHEELUP",
         keybindNextTarget     = "SHIFT-MOUSEWHEELDOWN",
+        summonAnnounceText    = ">> Summoning: %s <<",
         
         fonts = {
             label = { enableFont = false, font = "Arial Narrow", size =  8, outline = "OUTLINE" },
@@ -29,11 +30,19 @@ local options = {
     name = "SummonStoneHelper",
     type = "group",
     args = {
+        announceText={
+            name=LocalizedString["Summon Announcement"],
+            type="input",
+            width="full",
+            order=1,
+            get=function() return addon.opt.summonAnnounceText end,
+            set=function(_,v) addon.opt.summonAnnounceText=v end,
+        },
         keyBindings={
             name=LocalizedString["Key Bindings"],
             type="group",
             inline=true,
-            order=1,
+            order=2,
             args={
                 targetSelected={
                     name=LocalizedString["Target selected player"],
@@ -163,6 +172,7 @@ listener:SetScript("OnEvent", function(_, _, arg)
     AC:RegisterOptionsTable("SummonStoneHelper", options)
     local optionsRef = ACD:AddToBlizOptions("SummonStoneHelper")
     optionsRef.default = function()
+        addon.opt.summonAnnounceText = defaults.profile.summonAnnounceText
         addon.opt.keybindTargetSelected = defaults.profile.keybindTargetSelected
         addon.opt.keybindPreviousTarget = defaults.profile.keybindPreviousTarget
         addon.opt.keybindNextTarget = defaults.profile.keybindNextTarget
@@ -191,6 +201,14 @@ listener:SetScript("OnEvent", function(_, _, arg)
     
     _G.SlashCmdList.SummonStoneHelper = function()
         InterfaceOptionsFrame:Show() -- force it to load first
+        
+        -- this is a best-effort thing
+        -- the amount of effort i'm willing to invest fixing blizzard's bugs is limited
+        local scrollMin, scrollMax = InterfaceOptionsFrameAddOnsListScrollBar:GetMinMaxValues()
+        if scrollMin < scrollMax then
+            InterfaceOptionsFrameAddOnsListScrollBar:SetValue(scrollMax)
+        end
+        
         InterfaceOptionsFrame_OpenToCategory(optionsRef) -- open to our category
         if optionsRef.collapsed then -- expand our sub-categories
             InterfaceOptionsListButton_ToggleSubCategories(optionsRefDummy)

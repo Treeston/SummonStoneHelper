@@ -74,8 +74,8 @@ f:SetScript("OnEvent", function(_,e,arg1,arg2,arg3,arg4,arg5,arg6,arg7,arg8,arg9
         
         if arg1 == "player" then
             local c = IsInRaid() and "RAID" or IsInGroup() and "PARTY"
-            if c then
-                SendChatMessage((">> Summoning: %s <<"):format(GetUnitName("target")), c)
+            if c and (addon.opt.summonAnnounceText ~= "") then
+                SendChatMessage(addon.opt.summonAnnounceText:format(GetUnitName("target")), c)
             end
         end
     elseif e == "UNIT_SPELLCAST_CHANNEL_STOP" then
