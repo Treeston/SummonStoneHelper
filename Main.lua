@@ -17,8 +17,9 @@ local activeMeetingStone
 local function GetMemberNeedsSummon(idx)
     if not activeMeetingStone then return end
     
-    local name, _, _, _, class, classFile, subzone, isOnline, isDead = GetRaidRosterInfo(idx)
+    local name, _, _, level, class, classFile, subzone, isOnline, isDead = GetRaidRosterInfo(idx)
     if not isOnline then return end
+    if (level < activeMeetingStone.levelMin) or (level > activeMeetingStone.levelMax) then return end
     if not UnitExists(name) then return end
     
     if UnitIsVisible(name) then return end
@@ -148,20 +149,29 @@ local UpdateFnDecrease = function(target, current, candidate)
 end
 local targetFrameSelected = nil
 local function TargetFrameUpdate(isImprovement)
+    if not activeMeetingStone then
+        targetFrameTextContainer:Hide()
+        dummyFrameTarget:SetAttribute("macrotext", "")
+        return
+    end
+
     if not isImprovement then isImprovement = UpdateFnDefault end
 
     local nFound = 0
     local selectedName, selectedSubzone, selectedClass, selectedClassColors, selectedIsDead
-    for i=1, GetNumGroupMembers() do
-        local name, subzone, class, classColors, isDead = GetMemberNeedsSummon(i)
-        if name then
-            if (not targetFrameSelected) then
-                nFound = nFound+1
-                if random(nFound) == 1 then
+    local playerLevel = UnitLevel("player")
+    if (playerLevel >= activeMeetingStone.levelMin) and (playerLevel <= activeMeetingStone.levelMax) then
+        for i=1, GetNumGroupMembers() do
+            local name, subzone, class, classColors, isDead = GetMemberNeedsSummon(i)
+            if name then
+                if (not targetFrameSelected) then
+                    nFound = nFound+1
+                    if random(nFound) == 1 then
+                        selectedName, selectedSubzone, selectedClass, selectedClassColors, selectedIsDead = name, subzone, class, classColors, isDead
+                    end
+                elseif (not selectedName) or isImprovement(targetFrameSelected, selectedName, name) then
                     selectedName, selectedSubzone, selectedClass, selectedClassColors, selectedIsDead = name, subzone, class, classColors, isDead
                 end
-            elseif (not selectedName) or isImprovement(targetFrameSelected, selectedName, name) then
-                selectedName, selectedSubzone, selectedClass, selectedClassColors, selectedIsDead = name, subzone, class, classColors, isDead
             end
         end
     end
@@ -200,7 +210,7 @@ targetFrame:Hide()
 targetFrame:SetScript("OnHide", function() targetFrameSelected = nil targetFrameTextContainer:Hide() end)
 
 local unknownStonesNotified = {}
-local function SetActiveMeetingStone(which)
+local function SetActiveMeetingStone(which, levels)
     local stoneData = which and SummonStoneData[which]
     if which and not stoneData then
         if not unknownStonesNotified[which] then
@@ -214,6 +224,20 @@ local function SetActiveMeetingStone(which)
     activeMeetingStone = stoneData
     
     if stoneData then
+        local levelMin, levelMax = levels:match("(%d+)%-(%d+)")
+        if levelMin then
+            levelMin, levelMax = tonumber(levelMin), tonumber(levelMax)
+        else
+            if not unknownStonesNotified[which] then
+                unknownStonesNotified[which] = true
+                print(LocalizedString["|cffffd300SummonStoneHelper:|r Failed to parse level range for |cffffd300%s|r: |cffffd300%s|r"]:format(which, levels))
+                levelMin = 1
+                levelMax = 255
+            end
+        end
+        activeMeetingStone.levelMin = levelMin
+        activeMeetingStone.levelMax = levelMax
+
         SetOverrideBindingClick(targetFrame, true, addon.opt.keybindTargetSelected, "SummonStoneHelperTargetButton")
         if addon.opt.keybindPreviousTarget then
             SetOverrideBindingClick(targetFrame, true, addon.opt.keybindPreviousTarget, "SummonStoneHelperScrollUpButton")
@@ -242,7 +266,7 @@ GameTooltip:HookScript("OnUpdate", function(_,e)
         SetActiveMeetingStone(nil)
         return
     end
-    SetActiveMeetingStone(GameTooltipTextLeft2:GetText())
+    SetActiveMeetingStone(GameTooltipTextLeft2:GetText(), GameTooltipTextLeft3:GetText())
 end)
 GameTooltip:HookScript("OnShow", function() if not combatDisable then updateTick = 0 f:Show() end end)
 GameTooltip:HookScript("OnHide", function() SetActiveMeetingStone(nil) f:Hide() end)
@@ -262,5 +286,3 @@ f:SetScript("OnEvent", function(_,e)
 end)
 f:RegisterEvent("PLAYER_REGEN_DISABLED")
 f:RegisterEvent("PLAYER_REGEN_ENABLED")
-
--- @todo aceconfig support
