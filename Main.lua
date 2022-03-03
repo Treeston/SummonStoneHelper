@@ -192,7 +192,7 @@ end
 dummyFrameScrollUp:SetScript("OnClick", function() TargetFrameUpdate(UpdateFnDecrease) end)
 dummyFrameScrollDown:SetScript("OnClick", function() TargetFrameUpdate(UpdateFnIncrease) end)
 
-SummonTracker.RegisterUpdateCallback(function() TargetFrameUpdate() end)
+SummonTracker.RegisterUpdateCallback(function() if activeMeetingStone then TargetFrameUpdate() end end)
 
 local targetFrameUpdateDelay = 0.2
 targetFrame:SetScript("OnUpdate", function(_,e)
