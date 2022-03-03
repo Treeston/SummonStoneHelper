@@ -230,7 +230,9 @@ local function SetActiveMeetingStone(which, levels)
         else
             if not unknownStonesNotified[which] then
                 unknownStonesNotified[which] = true
-                print(LocalizedString["|cffffd300SummonStoneHelper:|r Failed to parse level range for |cffffd300%s|r: |cffffd300%s|r"]:format(which, levels))
+                if not levels:match("1d%-2d") then -- workaround for a blizzard formatstring bug; cf. issue #1
+                    print(LocalizedString["|cffffd300SummonStoneHelper:|r Failed to parse level range for |cffffd300%s|r: |cffffd300%s|r"]:format(which, levels))
+                end
             end
             levelMin = 1
             levelMax = 255
