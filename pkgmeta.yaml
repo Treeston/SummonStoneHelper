@@ -3,6 +3,7 @@ enable-nolib-creation: yes
 
 externals:
     externals/LibStub: https://repos.curseforge.com/wow/ace3/trunk/LibStub
+    externals/CallbackHandler-1.0: https://repos.curseforge.com/wow/callbackhandler/trunk/CallbackHandler-1.0
     externals/AceConfig-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceConfig-3.0
     externals/AceDB-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceDB-3.0
     externals/AceDBOptions-3.0: https://repos.curseforge.com/wow/ace3/trunk/AceDBOptions-3.0

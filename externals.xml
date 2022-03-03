@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 <!--@non-debug@
     <Script file="externals\LibStub\LibStub.lua"/>
+    <Include file="externals\CallbackHandler-1.0\CallbackHandler-1.0.xml"/>
     <Include file="externals\AceConfig-3.0\AceConfig-3.0.xml"/>
     <Include file="externals\AceDB-3.0\AceDB-3.0.xml"/>
     <Include file="externals\AceDBOptions-3.0\AceDBOptions-3.0.xml"/>
