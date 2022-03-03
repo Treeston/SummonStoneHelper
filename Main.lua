@@ -231,9 +231,9 @@ local function SetActiveMeetingStone(which, levels)
             if not unknownStonesNotified[which] then
                 unknownStonesNotified[which] = true
                 print(LocalizedString["|cffffd300SummonStoneHelper:|r Failed to parse level range for |cffffd300%s|r: |cffffd300%s|r"]:format(which, levels))
-                levelMin = 1
-                levelMax = 255
             end
+            levelMin = 1
+            levelMax = 255
         end
         activeMeetingStone.levelMin = levelMin
         activeMeetingStone.levelMax = levelMax
