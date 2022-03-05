@@ -1,4 +1,4 @@
-## Interface: 20504
+## Interface: 11402
 ## Title: SummonStoneHelper
 ## SavedVariables: SummonStoneHelper__DB
 ## Version: @project-version@

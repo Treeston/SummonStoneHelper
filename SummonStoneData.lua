@@ -34,42 +34,6 @@ local function RegisterStone(stoneAreaId, stoneMapId, acceptedMapIds, acceptedAr
     DATA[stoneNameL] = { name=stoneNameL, stoneMapId=stoneMapId, maps=mapsIdx, zones=zonesIdx }
 end
 
-RegisterStone(3545, -- Hellfire Citadel (can be either 5mans or Magtheridon, the stones have the same name)
-    530, -- Outland
-    { 543, 542, 540, 544 }, -- Ramps, BF, SHH, Magtheridon
-    { 3545, 3955 } -- Hellfire Citadel, Hellfire Basin
-)
-
-RegisterStone(3688, -- Auchindoun
-    530, -- Outland
-    { 557, 558, 556, 555 }, -- MT, AC, SEH, SL
-    { 3688, 3893 } -- Auchindoun, Ring of Observance
-)
-
-RegisterStone(3959, -- Black Temple
-    530, -- Outland
-    { 564 }, -- BT
-    { 3520, 3756, 3757 } -- Shadowmoon Valley, Ruins of Karabor, Ata'mal Terrace
-)
-
-RegisterStone(3607, -- Serpentshrine Cavern
-    530, -- Outland
-    { 547, 545, 546, 548 }, -- SP, UB, SV, SSC
-    { 3905 } -- Coilfang Reservoir
-)
-
-RegisterStone(3522, -- Blade's Edge Mountains
-    530, -- Outland
-    { 565 }, -- Gruul's Lair
-    { 3774 } -- Gruul's Lair
-)
-
-RegisterStone(3523, -- Netherstorm
-    530, -- Outland
-    { 553, 554, 552, 550 }, -- Bota, Mech, Arca, TK
-    { 3728, 3731, 3721, 3724, 3842 } -- The Vortex Fields, The Tempest Rift, The Crumbling Waste, Cosmowrench, Tempest Keep
-)
-
 RegisterStone(2437, -- Ragefire Chasm
     1, -- Kalimdor
     { 389 }, -- Ragefire Chasm
@@ -124,12 +88,6 @@ RegisterStone(1176, -- Zul'Farrak
     { 978, 979 } -- Zul'Farrak, Sandsorrow Watch
 )
 
-RegisterStone(2300, -- Caverns of Time
-    1, -- Kalimdor
-    { 560, 269, 534 }, -- OHF, BM, MH
-    { 2300 } -- Caverns of Time
-)
-
 RegisterStone(3428, -- Ahn'Qiraj
     1, -- Kalimdor
     { 509, 531 }, -- AQ20, AQ40
@@ -152,12 +110,6 @@ RegisterStone(2017, -- Stratholme
     0, -- Eastern Kingdoms
     { 329 }, -- Stratholme
     { 2625, 2277, 2627, 2279 } -- Eastwall Gate, Plaguewood, Terrordale, Stratholme
-)
-
-RegisterStone(3805, -- Zul'Aman
-    530, -- "Outland" (Ghostlands)
-    { --[[ @todo ZA map ID --]] }, -- Zul'Aman
-    { 3508, 3805 } -- Amani Pass, Zul'Aman
 )
 
 RegisterStone(209, -- Shadowfang Keep
@@ -202,12 +154,6 @@ RegisterStone(1581, -- The Deadmines
     { 1581, 20 } -- The Deadmines, Moonbrook
 )
 
-RegisterStone(3457, -- Karazhan
-    0, -- Eastern Kingdoms
-    { 532 }, -- Karazhan
-    { 2562, 2837 } -- Karazhan, The Master's Cellar
-)
-
 RegisterStone(1477, -- Sunken Temple
     0, -- Eastern Kingdoms
     { 109 }, -- Sunken Temple
@@ -219,3 +165,61 @@ RegisterStone(1977, -- Zul'Gurub
     { 309 }, -- Zul'Gurub
     { 19 } -- Zul'Gurub
 )
+
+if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+
+    RegisterStone(3545, -- Hellfire Citadel (can be either 5mans or Magtheridon, the stones have the same name)
+        530, -- Outland
+        { 543, 542, 540, 544 }, -- Ramps, BF, SHH, Magtheridon
+        { 3545, 3955 } -- Hellfire Citadel, Hellfire Basin
+    )
+
+    RegisterStone(3688, -- Auchindoun
+        530, -- Outland
+        { 557, 558, 556, 555 }, -- MT, AC, SEH, SL
+        { 3688, 3893 } -- Auchindoun, Ring of Observance
+    )
+
+    RegisterStone(3959, -- Black Temple
+        530, -- Outland
+        { 564 }, -- BT
+        { 3520, 3756, 3757 } -- Shadowmoon Valley, Ruins of Karabor, Ata'mal Terrace
+    )
+
+    RegisterStone(3607, -- Serpentshrine Cavern
+        530, -- Outland
+        { 547, 545, 546, 548 }, -- SP, UB, SV, SSC
+        { 3905 } -- Coilfang Reservoir
+    )
+
+    RegisterStone(3522, -- Blade's Edge Mountains
+        530, -- Outland
+        { 565 }, -- Gruul's Lair
+        { 3774 } -- Gruul's Lair
+    )
+
+    RegisterStone(3523, -- Netherstorm
+        530, -- Outland
+        { 553, 554, 552, 550 }, -- Bota, Mech, Arca, TK
+        { 3728, 3731, 3721, 3724, 3842 } -- The Vortex Fields, The Tempest Rift, The Crumbling Waste, Cosmowrench, Tempest Keep
+    )
+
+    RegisterStone(2300, -- Caverns of Time
+        1, -- Kalimdor
+        { 560, 269, 534 }, -- OHF, BM, MH
+        { 2300 } -- Caverns of Time
+    )
+
+    RegisterStone(3805, -- Zul'Aman
+        530, -- "Outland" (Ghostlands)
+        { 568 }, -- Zul'Aman
+        { 3508, 3805 } -- Amani Pass, Zul'Aman
+    )
+
+    RegisterStone(3457, -- Karazhan
+        0, -- Eastern Kingdoms
+        { 532 }, -- Karazhan
+        { 2562, 2837 } -- Karazhan, The Master's Cellar
+    )
+
+end
