@@ -221,5 +221,17 @@ if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
         { 532 }, -- Karazhan
         { 2562, 2837 } -- Karazhan, The Master's Cellar
     )
+    
+    RegisterStone(4131, -- Magisters' Terrace
+        530, -- "Outland" (Isle of Quel'Danas)
+        { 585 }, -- Magisters' Terrace
+        { 4095, 4080, 4088, 4086, 4087  } -- Magisters' Terrace, Isle of Quel'Danas, Sun's Reach Armory, Sun's Reach Sanctum, Sun's Reach Harbor
+    )
+    
+    RegisterStone(4075, -- Sunwell Plateau
+        530, -- "Outland" (Isle of Quel'Danas)
+        { 580 }, -- Sunwell Plateau
+        { 4094, 4080, 4089, 4090 } -- Sunwell Plateau, Isle of Quel'Danas, Dawnstar Village, The Dawning Square
+    )
 
 end
